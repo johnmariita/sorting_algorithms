@@ -20,7 +20,7 @@ void swap(int *a, int *b)
  * @size: the size of the whole array
  * Return: returns the index of the pivot
  */
-int partition(int *array, int start, int end, int size)
+int partition(int *array, int start, int end, __attribute__((unused))int size)
 {
 	int pivot, i, partition_index;
 
@@ -28,7 +28,7 @@ int partition(int *array, int start, int end, int size)
 	partition_index = start;
 	for (i = start; i < end; i++)
 	{
-		if (array[i] <= pivot)
+		if (array[i] < pivot)
 		{
 			swap(&array[i], &array[partition_index]);
 			partition_index++;

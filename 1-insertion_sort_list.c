@@ -3,32 +3,37 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *ptr = *list, *ptr2 = list, *sptr;
-	int *temp, temp2;
-	listint_t *sorted;
+	listint_t *current = (*list)->next;
 
-	if (ptr == NULL || ptr->next == NULL)
+	if (*list == NULL || (*list)->next == NULL)
 		return;
-	sorted = malloc(sizeof(listint_t));
-	sorted->prev = NULL;
-	sorted->next = NULL;
-	temp = (int *)&sorted->n;
-	sptr = sorted;
-	*temp = ptr->n;
-	ptr = ptr->next;
-	while (ptr)
+
+	while (current != NULL)
 	{
-		ptr2 = ptr;
-		while (sptr->next)
-			sptr = sptr->next;
-		while (sptr && sptr > ptr->n)
+		listint_t *ptr = current;
+		while (ptr->prev != NULL && ptr->n < ptr->prev->n)
 		{
-			
+			listint_t *tempNext = ptr->next;
+			listint_t *tempPrev = ptr->prev;
+
+			tempPrev->next = ptr->next;
+			if (ptr->next != NULL)
+				ptr->next->prev = tempPrev;
+
+			ptr->next = tempPrev;
+			ptr->prev = tempPrev->prev;
+
+			if (tempPrev->prev != NULL)
+				tempPrev->prev->next = ptr;
+
+			tempPrev->prev = ptr;
+
+			if (ptr->prev == NULL)
+				*list = ptr;
+
+			ptr = tempNext;
 		}
 
-
-
-		sptr = sorted;
-		ptr = ptr->next;
+		current = current->next;
 	}
 }
