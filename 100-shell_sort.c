@@ -19,12 +19,14 @@ void swap(int *a, int *b)
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t i;
-	int gap, j;
+	size_t i, gap;
+	int j;
 
 	if (size < 2)
 		return;
-	for (gap = size / 3; gap >= 1; gap = gap / 3)
+	for (gap = 1; gap < size / 3;)
+		gap = gap * 3 + 1;
+	for (; gap >= 1; gap = gap / 3)
 	{
 		for (i = gap; i < size; i++)
 		{
